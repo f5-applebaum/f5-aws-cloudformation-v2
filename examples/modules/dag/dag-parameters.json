@@ -8,7 +8,27 @@
     "ParameterValue": "f5cost"
   },
   {
+    "ParameterKey": "cfeTag",
+    "ParameterValue": ""
+  },
+  {
+    "ParameterKey": "cfeVipTag",
+    "ParameterValue": ""
+  },
+  {
     "ParameterKey": "createAppSecurityGroup",
+    "ParameterValue": "false"
+  },
+  {
+    "ParameterKey": "createBastionSecurityGroup",
+    "ParameterValue": "false"
+  },
+  {
+    "ParameterKey": "createExternalSecurityGroup",
+    "ParameterValue": "false"
+  },
+  {
+    "ParameterKey": "createInternalSecurityGroup",
     "ParameterValue": "false"
   },
   {

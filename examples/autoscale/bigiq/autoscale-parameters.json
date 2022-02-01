@@ -57,7 +57,7 @@
   },
   {
     "ParameterKey": "bigIpRuntimeInitPackageUrl",
-    "ParameterValue": "https://cdn.f5.com/product/cloudsolutions/f5-bigip-runtime-init/v1.3.2/dist/f5-bigip-runtime-init-1.3.2-1.gz.run"
+    "ParameterValue": "https://cdn.f5.com/product/cloudsolutions/f5-bigip-runtime-init/v1.4.0/dist/f5-bigip-runtime-init-1.4.0-1.gz.run"
   },
   {
     "ParameterKey": "bigIpScaleInCpuThreshold",
@@ -84,16 +84,8 @@
     "ParameterValue": 1
   },
   {
-    "ParameterKey": "bigIqAddress",
-    "ParameterValue": ""
-  },
-  {
     "ParameterKey": "bigIqAddressType",
     "ParameterValue": "private"
-  },
-  {
-    "ParameterKey": "bigIqLicensePool",
-    "ParameterValue": ""
   },
   {
     "ParameterKey": "bigIqSecretArn",
@@ -105,18 +97,6 @@
   },
   {
     "ParameterKey": "bigIqSubnetId",
-    "ParameterValue": ""
-  },
-  {
-    "ParameterKey": "bigIqTenant",
-    "ParameterValue": ""
-  },
-  {
-    "ParameterKey": "bigIqUsername",
-    "ParameterValue": ""
-  },
-  {
-    "ParameterKey": "bigIqUtilitySku",
     "ParameterValue": ""
   },
   {
@@ -149,11 +129,11 @@
   },
   {
     "ParameterKey": "lambdaS3BucketName",
-    "ParameterValue": ""
+    "ParameterValue": "f5-aws-bigiq-revoke"
   },
   {
     "ParameterKey": "lambdaS3Key",
-    "ParameterValue": ""
+    "ParameterValue": "main/"
   },
   {
     "ParameterKey": "loggingS3BucketName",
