@@ -779,7 +779,7 @@ Resources:
                 - !GetAtt
                   - Network
                   - Outputs.subnetsB
-        numSecondaryPrivateIpAddress: 1
+        numSecondaryPrivateIpAddress: 0
         sshKey: !Ref "sshKey"
         uniqueString: !Ref "uniqueString"
   Dag:

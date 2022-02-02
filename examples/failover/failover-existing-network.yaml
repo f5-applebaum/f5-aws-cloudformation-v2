@@ -571,7 +571,7 @@ Resources:
         mgmtSecurityGroupId: !GetAtt [Dag, Outputs.bigIpMgmtSecurityGroup]
         mgmtSelfIp: !Ref "bigIpMgmtSelfIp01"
         mgmtSubnetId: !Ref "bigIpMgmtSubnetId01"
-        numSecondaryPrivateIpAddress: 1
+        numSecondaryPrivateIpAddress: 0
         sshKey: !Ref "sshKey"
         uniqueString: !Ref "uniqueString"
   BigIpInstance02:
@@ -614,7 +614,7 @@ Resources:
         mgmtSecurityGroupId: !GetAtt [Dag, Outputs.bigIpMgmtSecurityGroup]
         mgmtSelfIp: !Ref "bigIpMgmtSelfIp02"
         mgmtSubnetId: !Ref "bigIpMgmtSubnetId02"
-        numSecondaryPrivateIpAddress: 1
+        numSecondaryPrivateIpAddress: !If [usePublicIpVip, 1, ""]
         sshKey: !Ref "sshKey"
         uniqueString: !Ref "uniqueString"
   Dag:
