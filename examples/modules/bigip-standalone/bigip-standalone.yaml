@@ -602,17 +602,41 @@ Resources:
     Condition: useStaticExternalIpAddr
     Properties:
       Description: Public External Interface for the BIG-IP
+      SecondaryPrivateIpAddressCount: !If
+        - noExternalServiceIPs
+        - !Ref "numSecondaryPrivateIpAddress"
+        - !Ref "AWS::NoValue"
       GroupSet:
         - !Ref "externalSecurityGroupId"
-      PrivateIpAddresses:
-        - Primary: true
-          PrivateIpAddress: !Ref "externalSelfIp"
-        - Primary: false
-          PrivateIpAddress: !Select
-            - "0"
-            - !Ref "externalServiceIps"
-      SubnetId: !Ref "externalSubnetId"
+      PrivateIpAddress: !If
+        - noExternalServiceIPs
+        - !Ref "externalSelfIp"
+        - !Ref "AWS::NoValue"
+      PrivateIpAddresses: !If
+        - hasExternalServiceIPs
+        - - Primary: true
+            PrivateIpAddress: !Ref "externalSelfIp"
+          - Primary: false
+            PrivateIpAddress: !Select
+              - "0"
+              - !Ref "externalServiceIps"
+        - !Ref "AWS::NoValue"
     Type: "AWS::EC2::NetworkInterface"
+  # BigipStaticExternalInterface:
+  #   Condition: useStaticExternalIpAddr
+  #   Properties:
+  #     Description: Public External Interface for the BIG-IP
+  #     GroupSet:
+  #       - !Ref "externalSecurityGroupId"
+  #     PrivateIpAddresses:
+  #       - Primary: true
+  #         PrivateIpAddress: !Ref "externalSelfIp"
+  #       - Primary: false
+  #         PrivateIpAddress: !Select
+  #           - "0"
+  #           - !Ref "externalServiceIps"
+  #     SubnetId: !Ref "externalSubnetId"
+  #   Type: "AWS::EC2::NetworkInterface"
   BigipVipEipAssociation:
     Condition: bigipVipEipAssociation
     Properties:
