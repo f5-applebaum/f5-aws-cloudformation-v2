@@ -621,6 +621,7 @@ Resources:
               - "0"
               - !Ref "externalServiceIps"
         - !Ref "AWS::NoValue"
+      SubnetId: !Ref "externalSubnetId"
     Type: "AWS::EC2::NetworkInterface"
   # BigipStaticExternalInterface:
   #   Condition: useStaticExternalIpAddr
