@@ -98,9 +98,9 @@ Metadata:
       bigIpExternalSelfIp02:
         default: External private ip address for BIGIP instance B
       bigIpExternalVip01:
-        default: External secondary ip address for BIGIP instance A
+        default: External secondary ip address for BIGIP instance A VIP
       bigIpExternalVip02:
-        default: External secondary ip address for BIGIP instance B
+        default: External secondary ip address for BIGIP instance B VIP
       group:
         default: Group
       bigIpInternalSelfIp01:
