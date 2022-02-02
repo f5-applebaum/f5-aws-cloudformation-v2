@@ -39,17 +39,13 @@ Conditions:
       - !Equals
         - !Ref "mgmtSubnetId"
         - ""
-  noExternalServiceIPs: !And
-    - !Condition "is1Nic"
+  noExternalServiceIPs: !Equals
+    - !Join ["", !Ref "externalServiceIps"]
+    - ""
+  hasExternalServiceIPs: !Not
     - !Equals
       - !Join ["", !Ref "externalServiceIps"]
       - ""
-  hasExternalServiceIPs: !And
-    - !Condition "is1Nic"
-    - !Not
-      - !Equals
-        - !Join ["", !Ref "externalServiceIps"]
-        - ""
   useMgmtSecondary: !Or
     - !Condition "useDynamicExternalIpAddr"
     - !Condition "useStaticExternalIpAddr"
@@ -602,10 +598,6 @@ Resources:
     Condition: useStaticExternalIpAddr
     Properties:
       Description: Public External Interface for the BIG-IP
-      SecondaryPrivateIpAddressCount: !If
-        - noExternalServiceIPs
-        - !Ref "numSecondaryPrivateIpAddress"
-        - !Ref "AWS::NoValue"
       GroupSet:
         - !Ref "externalSecurityGroupId"
       PrivateIpAddress: !If
