@@ -6,10 +6,10 @@ Description: >-
 Conditions:
   createBigIqRoles: !Equals
     - !Ref createBigIqRoles
-    - 'true'
+    - "true"
   createAmiRole: !Equals
     - !Ref createAmiRole
-    - 'true'
+    - "true"
   standard: !Equals
     - !Ref solutionType
     - standard
@@ -27,14 +27,14 @@ Conditions:
     - failover
   useBigIqSecretArn: !Not
     - !Equals
-      - ''
+      - ""
       - !Ref bigIqSecretArn
   useSecretArn: !Not
     - !Equals
-      - ''
+      - ""
       - !Ref secretArn
 Metadata:
-  'AWS::CloudFormation::Interface':
+  "AWS::CloudFormation::Interface":
     ParameterGroups:
       - Label:
           default: IAM ROLES
@@ -113,7 +113,7 @@ Parameters:
     Description: Application Tag.
     Type: String
   bigIqSecretArn:
-    Default: ''
+    Default: ""
     Description: The ARN of the AWS secret containing the password used during BIG-IP licensing via BIG-IQ.
     Type: String
   cost:
@@ -122,16 +122,16 @@ Parameters:
     Type: String
   createAmiRole:
     AllowedValues:
-      - 'true'
-      - 'false'
-    Default: 'false'
+      - "true"
+      - "false"
+    Default: "false"
     Description: Value of true creates IAM roles required for ami lookup function.
     Type: String
   createBigIqRoles:
     AllowedValues:
-      - 'true'
-      - 'false'
-    Default: 'false'
+      - "true"
+      - "false"
+    Default: "false"
     Description: Value of true creates IAM roles required to revoke license assignments from BIG-IQ.
     Type: String
   environment:
@@ -147,11 +147,11 @@ Parameters:
     Description: Owner Tag.
     Type: String
   s3Bucket:
-    Default: ''
+    Default: ""
     Description: Provides BIG-IP S3 Bucket name
     Type: String
   secretArn:
-    Default: ''
+    Default: ""
     Description: ARN of Secrets Manager secret
     Type: String
   solutionType:
@@ -174,10 +174,10 @@ Parameters:
 Resources:
   CopyZipsRole:
     Condition: createBigIqRoles
-    Type: 'AWS::IAM::Role'
+    Type: "AWS::IAM::Role"
     Properties:
       AssumeRolePolicyDocument:
-        Version: '2012-10-17'
+        Version: "2012-10-17"
         Statement:
           - Effect: Allow
             Principal:
@@ -189,7 +189,7 @@ Resources:
       Policies:
         - PolicyName: lambda-copier
           PolicyDocument:
-            Version: '2012-10-17'
+            Version: "2012-10-17"
             Statement:
               - Effect: Allow
                 Action:
@@ -202,9 +202,9 @@ Resources:
       Tags:
         - Key: Name
           Value: !Join
-            - ''
+            - ""
             - - !Ref uniqueString
-              - '-BigipCopyZipsRole'
+              - "-BigipCopyZipsRole"
         - Key: costcenter
           Value: !Ref cost
         - Key: environment
@@ -217,12 +217,12 @@ Resources:
           Value: !Ref uniqueString
   LambdaAccessRole:
     Condition: createBigIqRoles
-    Type: 'AWS::IAM::Role'
+    Type: "AWS::IAM::Role"
     Properties:
       AssumeRolePolicyDocument:
         Statement:
           - Action:
-              - 'sts:AssumeRole'
+              - "sts:AssumeRole"
             Effect: Allow
             Principal:
               Service:
@@ -235,37 +235,37 @@ Resources:
         - PolicyDocument:
             Statement:
               - Action:
-                  - 'ec2:DescribeInstances'
-                  - 'autoscaling:CompleteLifecycleAction'
-                  - 'autoscaling:DescribeAutoScalingGroups'
-                  - 'xray:PutTraceSegments'
-                  - 'xray:PutTelemetryRecords'
+                  - "ec2:DescribeInstances"
+                  - "autoscaling:CompleteLifecycleAction"
+                  - "autoscaling:DescribeAutoScalingGroups"
+                  - "xray:PutTraceSegments"
+                  - "xray:PutTelemetryRecords"
                 Effect: Allow
-                Resource: '*'
+                Resource: "*"
               - Action:
-                  - 'ec2:DescribeNetworkInterfaces'
-                  - 'ec2:CreateNetworkInterface'
-                  - 'ec2:DeleteNetworkInterface'
+                  - "ec2:DescribeNetworkInterfaces"
+                  - "ec2:CreateNetworkInterface"
+                  - "ec2:DeleteNetworkInterface"
                 Effect: Allow
-                Resource: '*'
+                Resource: "*"
               - Action:
-                  - 'secretsmanager:GetSecretValue'
+                  - "secretsmanager:GetSecretValue"
                 Effect: Allow
                 Resource: !Ref bigIqSecretArn
               - Action:
-                  - 'logs:CreateLogGroup'
-                  - 'logs:CreateLogStream'
-                  - 'logs:PutLogEvents'
+                  - "logs:CreateLogGroup"
+                  - "logs:CreateLogStream"
+                  - "logs:PutLogEvents"
                 Effect: Allow
-                Resource: 'arn:aws:logs:*:*:*'
+                Resource: "arn:aws:logs:*:*:*"
             Version: 2012-10-17
           PolicyName: LambdaAccessPolicy
       Tags:
         - Key: Name
           Value: !Join
-            - ''
+            - ""
             - - !Ref uniqueString
-              - '-bigip-access-role'
+              - "-bigip-access-role"
         - Key: costcenter
           Value: !Ref cost
         - Key: environment
@@ -276,7 +276,7 @@ Resources:
           Value: !Ref owner
   LambdaAmiExecutionRole:
     Condition: createAmiRole
-    Type: 'AWS::IAM::Role'
+    Type: "AWS::IAM::Role"
     Properties:
       AssumeRolePolicyDocument:
         Version: 2012-10-17
@@ -286,7 +286,7 @@ Resources:
               Service:
                 - lambda.amazonaws.com
             Action:
-              - 'sts:AssumeRole'
+              - "sts:AssumeRole"
       Path: /
       Policies:
         - PolicyName: LambdaAmiAccessPolicy
@@ -295,20 +295,20 @@ Resources:
             Statement:
               - Effect: Allow
                 Action:
-                  - 'logs:CreateLogGroup'
-                  - 'logs:CreateLogStream'
-                  - 'logs:PutLogEvents'
-                Resource: 'arn:aws:logs:*:*:*'
+                  - "logs:CreateLogGroup"
+                  - "logs:CreateLogStream"
+                  - "logs:PutLogEvents"
+                Resource: "arn:aws:logs:*:*:*"
               - Effect: Allow
                 Action:
-                  - 'ec2:DescribeImages'
-                Resource: '*'
+                  - "ec2:DescribeImages"
+                Resource: "*"
       Tags:
         - Key: Name
           Value: !Join
-            - ''
+            - ""
             - - !Ref uniqueString
-              - '-lambda-ami-role'
+              - "-lambda-ami-role"
         - Key: costcenter
           Value: !Ref cost
         - Key: environment
@@ -323,21 +323,21 @@ Resources:
     Properties:
       AssumeRolePolicyDocument:
         Statement:
-        - Action:
-            - 'sts:AssumeRole'
-          Effect: Allow
-          Principal:
-            Service:
-              - autoscaling.amazonaws.com
+          - Action:
+              - "sts:AssumeRole"
+            Effect: Allow
+            Principal:
+              Service:
+                - autoscaling.amazonaws.com
       ManagedPolicyArns:
         - arn:aws:iam::aws:policy/service-role/AutoScalingNotificationAccessRole
       Path: /
       Tags:
         - Key: Name
           Value: !Join
-            - ''
+            - ""
             - - !Ref uniqueString
-              - '-bigip-notification-role'
+              - "-bigip-notification-role"
         - Key: costcenter
           Value: !Ref cost
         - Key: environment
@@ -348,12 +348,12 @@ Resources:
           Value: !Ref owner
   BigIpStandardAccessRole:
     Condition: standard
-    Type: 'AWS::IAM::Role'
+    Type: "AWS::IAM::Role"
     Properties:
       AssumeRolePolicyDocument:
         Statement:
           - Action:
-              - 'sts:AssumeRole'
+              - "sts:AssumeRole"
             Effect: Allow
             Principal:
               Service:
@@ -364,47 +364,47 @@ Resources:
         - PolicyDocument:
             Statement:
               - Action:
-                  - 'autoscaling:DescribeAutoScalingGroups'
-                  - 'autoscaling:DescribeAutoScalingInstances'
-                  - 'ec2:DescribeAddresses'
-                  - 'ec2:DescribeInstances'
-                  - 'ec2:DescribeInstanceStatus'
-                  - 'ec2:DescribeNetworkInterfaces'
-                  - 'ec2:DescribeNetworkInterfaceAttribute'
-                  - 'ec2:DescribeTags'
+                  - "autoscaling:DescribeAutoScalingGroups"
+                  - "autoscaling:DescribeAutoScalingInstances"
+                  - "ec2:DescribeAddresses"
+                  - "ec2:DescribeInstances"
+                  - "ec2:DescribeInstanceStatus"
+                  - "ec2:DescribeNetworkInterfaces"
+                  - "ec2:DescribeNetworkInterfaceAttribute"
+                  - "ec2:DescribeTags"
                 Effect: Allow
                 Resource:
-                  - '*'
+                  - "*"
               - Action:
-                  - 'sts:AssumeRole'
+                  - "sts:AssumeRole"
                 Effect: Allow
                 Resource:
-                  - '*'
+                  - "*"
               - Action:
-                  - 'cloudwatch:PutMetricData'
-                  - 'logs:DescribeLogGroups'
-                  - 'logs:DescribeLogStreams'
-                  - 'logs:PutLogEvents'
+                  - "cloudwatch:PutMetricData"
+                  - "logs:DescribeLogGroups"
+                  - "logs:DescribeLogStreams"
+                  - "logs:PutLogEvents"
                 Effect: Allow
                 Resource:
-                  - '*'
+                  - "*"
               - Action:
-                  - 'cloudformation:ListStackResources'
-                  - 'cloudformation:SignalResource'
+                  - "cloudformation:ListStackResources"
+                  - "cloudformation:SignalResource"
                 Effect: Allow
                 Resource:
-                  - '*'
+                  - "*"
             Version: 2012-10-17
           PolicyName: !Join
-            - ''
+            - ""
             - - !Ref uniqueString
-              - '-BigipStandardAcccessPolicy'
+              - "-BigipStandardAcccessPolicy"
       Tags:
         - Key: Name
           Value: !Join
-            - ''
+            - ""
             - - !Ref uniqueString
-              - '-bigip-standard-access-role'
+              - "-bigip-standard-access-role"
         - Key: costcenter
           Value: !Ref cost
         - Key: environment
@@ -415,12 +415,12 @@ Resources:
           Value: !Ref owner
   BigIpSecretAccessRole:
     Condition: secret
-    Type: 'AWS::IAM::Role'
+    Type: "AWS::IAM::Role"
     Properties:
       AssumeRolePolicyDocument:
         Statement:
           - Action:
-              - 'sts:AssumeRole'
+              - "sts:AssumeRole"
             Effect: Allow
             Principal:
               Service:
@@ -431,41 +431,41 @@ Resources:
         - PolicyDocument:
             Statement:
               - Action:
-                  - 'autoscaling:DescribeAutoScalingGroups'
-                  - 'autoscaling:DescribeAutoScalingInstances'
-                  - 'ec2:DescribeAddresses'
-                  - 'ec2:DescribeInstances'
-                  - 'ec2:DescribeInstanceStatus'
-                  - 'ec2:DescribeNetworkInterfaces'
-                  - 'ec2:DescribeNetworkInterfaceAttribute'
-                  - 'ec2:DescribeTags'
+                  - "autoscaling:DescribeAutoScalingGroups"
+                  - "autoscaling:DescribeAutoScalingInstances"
+                  - "ec2:DescribeAddresses"
+                  - "ec2:DescribeInstances"
+                  - "ec2:DescribeInstanceStatus"
+                  - "ec2:DescribeNetworkInterfaces"
+                  - "ec2:DescribeNetworkInterfaceAttribute"
+                  - "ec2:DescribeTags"
                 Effect: Allow
                 Resource:
-                  - '*'
+                  - "*"
               - Action:
-                  - 'sts:AssumeRole'
+                  - "sts:AssumeRole"
                 Effect: Allow
                 Resource:
-                  - '*'
+                  - "*"
               - Action:
-                  - 'cloudwatch:PutMetricData'
-                  - 'logs:DescribeLogGroups'
-                  - 'logs:DescribeLogStreams'
-                  - 'logs:PutLogEvents'
+                  - "cloudwatch:PutMetricData"
+                  - "logs:DescribeLogGroups"
+                  - "logs:DescribeLogStreams"
+                  - "logs:PutLogEvents"
                 Effect: Allow
                 Resource:
-                  - '*'
+                  - "*"
               - Action:
-                  - 'cloudformation:ListStackResources'
-                  - 'cloudformation:SignalResource'
+                  - "cloudformation:ListStackResources"
+                  - "cloudformation:SignalResource"
                 Effect: Allow
                 Resource:
-                  - '*'
+                  - "*"
               - Action:
-                  - 'secretsmanager:DescribeSecret'
-                  - 'secretsmanager:GetResourcePolicy'
-                  - 'secretsmanager:GetSecretValue'
-                  - 'secretsmanager:ListSecretVersionIds'
+                  - "secretsmanager:DescribeSecret"
+                  - "secretsmanager:GetResourcePolicy"
+                  - "secretsmanager:GetSecretValue"
+                  - "secretsmanager:ListSecretVersionIds"
                 Effect: Allow
                 Resource:
                   - !If
@@ -478,15 +478,15 @@ Resources:
                     - !Ref AWS::NoValue
             Version: 2012-10-17
           PolicyName: !Join
-            - ''
+            - ""
             - - !Ref uniqueString
-              - '-BigipSecretAcccessPolicy'
+              - "-BigipSecretAcccessPolicy"
       Tags:
         - Key: Name
           Value: !Join
-            - ''
+            - ""
             - - !Ref uniqueString
-              - '-bigip-secret-access-role'
+              - "-bigip-secret-access-role"
         - Key: costcenter
           Value: !Ref cost
         - Key: environment
@@ -499,12 +499,12 @@ Resources:
           Value: !Ref uniqueString
   BigIpS3AccessRole:
     Condition: s3
-    Type: 'AWS::IAM::Role'
+    Type: "AWS::IAM::Role"
     Properties:
       AssumeRolePolicyDocument:
         Statement:
           - Action:
-              - 'sts:AssumeRole'
+              - "sts:AssumeRole"
             Effect: Allow
             Principal:
               Service:
@@ -515,64 +515,64 @@ Resources:
         - PolicyDocument:
             Statement:
               - Action:
-                  - 'autoscaling:DescribeAutoScalingGroups'
-                  - 'autoscaling:DescribeAutoScalingInstances'
-                  - 'ec2:DescribeAddresses'
-                  - 'ec2:DescribeInstances'
-                  - 'ec2:DescribeInstanceStatus'
-                  - 'ec2:DescribeNetworkInterfaces'
-                  - 'ec2:DescribeNetworkInterfaceAttribute'
-                  - 'ec2:DescribeTags'
+                  - "autoscaling:DescribeAutoScalingGroups"
+                  - "autoscaling:DescribeAutoScalingInstances"
+                  - "ec2:DescribeAddresses"
+                  - "ec2:DescribeInstances"
+                  - "ec2:DescribeInstanceStatus"
+                  - "ec2:DescribeNetworkInterfaces"
+                  - "ec2:DescribeNetworkInterfaceAttribute"
+                  - "ec2:DescribeTags"
                 Effect: Allow
                 Resource:
-                  - '*'
+                  - "*"
               - Action:
-                  - 'sts:AssumeRole'
+                  - "sts:AssumeRole"
                 Effect: Allow
                 Resource:
-                  - '*'
+                  - "*"
               - Action:
-                  - 'cloudwatch:PutMetricData'
-                  - 'logs:DescribeLogGroups'
-                  - 'logs:DescribeLogStreams'
-                  - 'logs:PutLogEvents'
+                  - "cloudwatch:PutMetricData"
+                  - "logs:DescribeLogGroups"
+                  - "logs:DescribeLogStreams"
+                  - "logs:PutLogEvents"
                 Effect: Allow
                 Resource:
-                  - '*'
+                  - "*"
               - Action:
-                  - 'cloudformation:ListStackResources'
-                  - 'cloudformation:SignalResource'
+                  - "cloudformation:ListStackResources"
+                  - "cloudformation:SignalResource"
                 Effect: Allow
                 Resource:
-                  - '*'
+                  - "*"
               - Action:
-                  - 's3:ListBucket'
+                  - "s3:ListBucket"
                 Effect: Allow
                 Resource: !Join
-                  - ''
-                  - - 'arn:*:s3:::'
+                  - ""
+                  - - "arn:*:s3:::"
                     - !Ref s3Bucket
               - Action:
-                  - 's3:PutObject'
-                  - 's3:GetObject'
-                  - 's3:DeleteObject'
+                  - "s3:PutObject"
+                  - "s3:GetObject"
+                  - "s3:DeleteObject"
                 Effect: Allow
                 Resource: !Join
-                  - ''
-                  - - 'arn:*:s3:::'
+                  - ""
+                  - - "arn:*:s3:::"
                     - !Ref s3Bucket
                     - /*
             Version: 2012-10-17
           PolicyName: !Join
-            - ''
+            - ""
             - - !Ref uniqueString
-              - '-BigipS3AcccessPolicy'
+              - "-BigipS3AcccessPolicy"
       Tags:
         - Key: Name
           Value: !Join
-            - ''
+            - ""
             - - !Ref uniqueString
-              - '-bigip-s3-access-role'
+              - "-bigip-s3-access-role"
         - Key: costcenter
           Value: !Ref cost
         - Key: environment
@@ -583,12 +583,12 @@ Resources:
           Value: !Ref owner
   BigIpSecretS3AccessRole:
     Condition: secretS3
-    Type: 'AWS::IAM::Role'
+    Type: "AWS::IAM::Role"
     Properties:
       AssumeRolePolicyDocument:
         Statement:
           - Action:
-              - 'sts:AssumeRole'
+              - "sts:AssumeRole"
             Effect: Allow
             Principal:
               Service:
@@ -599,41 +599,41 @@ Resources:
         - PolicyDocument:
             Statement:
               - Action:
-                  - 'autoscaling:DescribeAutoScalingGroups'
-                  - 'autoscaling:DescribeAutoScalingInstances'
-                  - 'ec2:DescribeAddresses'
-                  - 'ec2:DescribeInstances'
-                  - 'ec2:DescribeInstanceStatus'
-                  - 'ec2:DescribeNetworkInterfaces'
-                  - 'ec2:DescribeNetworkInterfaceAttribute'
-                  - 'ec2:DescribeTags'
+                  - "autoscaling:DescribeAutoScalingGroups"
+                  - "autoscaling:DescribeAutoScalingInstances"
+                  - "ec2:DescribeAddresses"
+                  - "ec2:DescribeInstances"
+                  - "ec2:DescribeInstanceStatus"
+                  - "ec2:DescribeNetworkInterfaces"
+                  - "ec2:DescribeNetworkInterfaceAttribute"
+                  - "ec2:DescribeTags"
                 Effect: Allow
                 Resource:
-                  - '*'
+                  - "*"
               - Action:
-                  - 'sts:AssumeRole'
+                  - "sts:AssumeRole"
                 Effect: Allow
                 Resource:
-                  - '*'
+                  - "*"
               - Action:
-                  - 'cloudwatch:PutMetricData'
-                  - 'logs:DescribeLogGroups'
-                  - 'logs:DescribeLogStreams'
-                  - 'logs:PutLogEvents'
+                  - "cloudwatch:PutMetricData"
+                  - "logs:DescribeLogGroups"
+                  - "logs:DescribeLogStreams"
+                  - "logs:PutLogEvents"
                 Effect: Allow
                 Resource:
-                  - '*'
+                  - "*"
               - Action:
-                  - 'cloudformation:ListStackResources'
-                  - 'cloudformation:SignalResource'
+                  - "cloudformation:ListStackResources"
+                  - "cloudformation:SignalResource"
                 Effect: Allow
                 Resource:
-                  - '*'
+                  - "*"
               - Action:
-                  - 'secretsmanager:DescribeSecret'
-                  - 'secretsmanager:GetResourcePolicy'
-                  - 'secretsmanager:GetSecretValue'
-                  - 'secretsmanager:ListSecretVersionIds'
+                  - "secretsmanager:DescribeSecret"
+                  - "secretsmanager:GetResourcePolicy"
+                  - "secretsmanager:GetSecretValue"
+                  - "secretsmanager:ListSecretVersionIds"
                 Effect: Allow
                 Resource:
                   - !If
@@ -645,33 +645,33 @@ Resources:
                     - !Ref bigIqSecretArn
                     - !Ref AWS::NoValue
               - Action:
-                  - 's3:ListBucket'
+                  - "s3:ListBucket"
                 Effect: Allow
                 Resource: !Join
-                  - ''
-                  - - 'arn:*:s3:::'
+                  - ""
+                  - - "arn:*:s3:::"
                     - !Ref s3Bucket
               - Action:
-                  - 's3:PutObject'
-                  - 's3:GetObject'
-                  - 's3:DeleteObject'
+                  - "s3:PutObject"
+                  - "s3:GetObject"
+                  - "s3:DeleteObject"
                 Effect: Allow
                 Resource: !Join
-                  - ''
-                  - - 'arn:*:s3:::'
+                  - ""
+                  - - "arn:*:s3:::"
                     - !Ref s3Bucket
                     - /*
             Version: 2012-10-17
           PolicyName: !Join
-            - ''
+            - ""
             - - !Ref uniqueString
-              - '-BigipSecretAndS3AcccessPolicy'
+              - "-BigipSecretAndS3AcccessPolicy"
       Tags:
         - Key: Name
           Value: !Join
-            - ''
+            - ""
             - - !Ref uniqueString
-              - '-bigip-secret-s3-access-role'
+              - "-bigip-secret-s3-access-role"
         - Key: costcenter
           Value: !Ref cost
         - Key: environment
@@ -682,12 +682,12 @@ Resources:
           Value: !Ref owner
   BigIpHighAvailabilityAccessRole:
     Condition: failover
-    Type: 'AWS::IAM::Role'
+    Type: "AWS::IAM::Role"
     Properties:
       AssumeRolePolicyDocument:
         Statement:
           - Action:
-              - 'sts:AssumeRole'
+              - "sts:AssumeRole"
             Effect: Allow
             Principal:
               Service:
@@ -698,74 +698,82 @@ Resources:
         - PolicyDocument:
             Statement:
               - Action:
-                  - 'ec2:DescribeAddresses'
-                  - 'ec2:DescribeInstances'
-                  - 'ec2:DescribeInstanceStatus'
-                  - 'ec2:DescribeNetworkInterfaces'
-                  - 'ec2:DescribeNetworkInterfaceAttribute'
-                  - 'ec2:DescribeTags'
-                  - 'ec2:DescribeSubnets'
-                  - 'ec2:AssociateAddress'
-                  - 'ec2:DescribeRouteTables'
-                  - 'ec2:DisassociateAddress'
-                  - 'ec2:ReplaceRoute'
-                  - 'ec2:AssignPrivateIpAddresses'
-                  - 'ec2:UnassignPrivateIpAddresses'
-                  - 'ec2:AssignIpv6Addresses'
-                  - 'ec2:UnassignIpv6Addresses'
-                  - 's3:ListAllMyBuckets'
-                  - 's3:GetBucketLocation'
+                  - "ec2:DescribeAddresses"
+                  - "ec2:DescribeInstances"
+                  - "ec2:DescribeInstanceStatus"
+                  - "ec2:DescribeNetworkInterfaces"
+                  - "ec2:DescribeNetworkInterfaceAttribute"
+                  - "ec2:DescribeTags"
+                  - "ec2:DescribeSubnets"
+                  - "ec2:AssociateAddress"
+                  - "ec2:DescribeRouteTables"
+                  - "ec2:DisassociateAddress"
+                  - "ec2:ReplaceRoute"
+                  - "ec2:AssignPrivateIpAddresses"
+                  - "ec2:UnassignPrivateIpAddresses"
+                  - "ec2:AssignIpv6Addresses"
+                  - "ec2:UnassignIpv6Addresses"
+                  - "s3:ListAllMyBuckets"
+                  - "s3:GetBucketLocation"
                 Effect: Allow
                 Resource:
-                  - '*'
+                  - "*"
               - Action:
-                  - 'sts:AssumeRole'
+                  - "sts:AssumeRole"
                 Effect: Allow
                 Resource:
-                  - '*'
+                  - "*"
               - Action:
-                  - 'cloudwatch:PutMetricData'
-                  - 'logs:DescribeLogGroups'
-                  - 'logs:DescribeLogStreams'
-                  - 'logs:PutLogEvents'
+                  - "cloudwatch:PutMetricData"
+                  - "logs:DescribeLogGroups"
+                  - "logs:DescribeLogStreams"
+                  - "logs:PutLogEvents"
                 Effect: Allow
                 Resource:
-                  - '*'
+                  - "*"
               - Action:
-                  - 'cloudformation:ListStackResources'
-                  - 'cloudformation:SignalResource'
+                  - "cloudformation:ListStackResources"
+                  - "cloudformation:SignalResource"
                 Effect: Allow
                 Resource:
-                  - '*'
+                  - "*"
               - Action:
-                  - 'secretsmanager:DescribeSecret'
-                  - 'secretsmanager:GetResourcePolicy'
-                  - 'secretsmanager:GetSecretValue'
-                  - 'secretsmanager:ListSecretVersionIds'
+                  - "secretsmanager:DescribeSecret"
+                  - "secretsmanager:GetResourcePolicy"
+                  - "secretsmanager:GetSecretValue"
+                  - "secretsmanager:ListSecretVersionIds"
                 Effect: Allow
                 Resource: !Ref secretArn
               - Action:
-                  - 's3:ListBucket'
-                  - 's3:GetBucketTagging'
-                  - 's3:PutObject'
-                  - 's3:GetObject'
-                  - 's3:DeleteObject'
+                  - s3:ListBucket
+                  - s3:GetBucketLocation
+                  - s3:GetBucketTagging
                 Effect: Allow
                 Resource: !Join
-                  - ''
-                  - - 'arn:*:s3:::'
+                  - ""
+                  - - "arn:*:s3:::"
                     - !Ref s3Bucket
+              - Action:
+                  - s3:PutObject
+                  - s3:GetObject
+                  - s3:DeleteObject
+                Effect: Allow
+                Resource: !Join
+                  - ""
+                  - - "arn:*:s3:::"
+                    - !Ref s3Bucket
+                    - /*
             Version: 2012-10-17
           PolicyName: !Join
-            - ''
+            - ""
             - - !Ref uniqueString
-              - '-BigipHighAvailabilityAcccessPolicy'
+              - "-BigipHighAvailabilityAcccessPolicy"
       Tags:
         - Key: Name
           Value: !Join
-            - ''
+            - ""
             - - !Ref uniqueString
-              - '-bigip-high-availability-access-role'
+              - "-bigip-high-availability-access-role"
         - Key: costcenter
           Value: !Ref cost
         - Key: environment
@@ -776,35 +784,35 @@ Resources:
           Value: !Ref owner
   BigIpStandardInstanceProfile:
     Condition: standard
-    Type: 'AWS::IAM::InstanceProfile'
+    Type: "AWS::IAM::InstanceProfile"
     Properties:
       Path: /
       Roles:
         - !Ref BigIpStandardAccessRole
   BigIpSecretInstanceProfile:
     Condition: secret
-    Type: 'AWS::IAM::InstanceProfile'
+    Type: "AWS::IAM::InstanceProfile"
     Properties:
       Path: /
       Roles:
         - !Ref BigIpSecretAccessRole
   BigIpS3InstanceProfile:
     Condition: s3
-    Type: 'AWS::IAM::InstanceProfile'
+    Type: "AWS::IAM::InstanceProfile"
     Properties:
       Path: /
       Roles:
         - !Ref BigIpS3AccessRole
   BigIpSecretS3InstanceProfile:
     Condition: secretS3
-    Type: 'AWS::IAM::InstanceProfile'
+    Type: "AWS::IAM::InstanceProfile"
     Properties:
       Path: /
       Roles:
         - !Ref BigIpSecretS3AccessRole
   BigIpHighAvailabilityInstanceProfile:
     Condition: failover
-    Type: 'AWS::IAM::InstanceProfile'
+    Type: "AWS::IAM::InstanceProfile"
     Properties:
       Path: /
       Roles:

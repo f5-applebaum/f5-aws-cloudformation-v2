@@ -25,11 +25,11 @@
   },
   {
     "ParameterKey": "bigIpRuntimeInitConfig01",
-    "ParameterValue": "https://raw.githubusercontent.com/F5Networks/f5-aws-cloudformation-v2/v1.2.0.0/examples/failover/bigip-configurations/runtime-init-conf-3nic-payg-instance01.yaml"
+    "ParameterValue": "https://raw.githubusercontent.com/F5Networks/f5-aws-cloudformation-v2/v1.2.0.0/examples/failover/bigip-configurations/runtime-init-conf-3nic-payg-instance01-with-app.yaml"
   },
   {
     "ParameterKey": "bigIpRuntimeInitConfig02",
-    "ParameterValue": "https://raw.githubusercontent.com/F5Networks/f5-aws-cloudformation-v2/v1.2.0.0/examples/failover/bigip-configurations/runtime-init-conf-3nic-payg-instance01.yaml"
+    "ParameterValue": "https://raw.githubusercontent.com/F5Networks/f5-aws-cloudformation-v2/v1.2.0.0/examples/failover/bigip-configurations/runtime-init-conf-3nic-payg-instance01-with-app.yaml"
   },
   {
     "ParameterKey": "bigIpRuntimeInitPackageUrl",
@@ -93,11 +93,11 @@
   },
   {
     "ParameterKey": "numAzs",
-    "ParameterValue": 2
+    "ParameterValue": "2"
   },
   {
     "ParameterKey": "numSubnets",
-    "ParameterValue": 3
+    "ParameterValue": "3"
   },
   {
     "ParameterKey": "owner",
@@ -105,7 +105,7 @@
   },
   {
     "ParameterKey": "provisionExampleApp",
-    "ParameterValue": "false"
+    "ParameterValue": "yes"
   },
   {
     "ParameterKey": "provisionPublicIpMgmt",
@@ -137,7 +137,7 @@
   },
   {
     "ParameterKey": "subnetMask",
-    "ParameterValue": 24
+    "ParameterValue": "24"
   },
   {
     "ParameterKey": "uniqueString",
