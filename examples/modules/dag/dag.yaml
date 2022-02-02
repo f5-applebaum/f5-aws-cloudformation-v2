@@ -5,73 +5,73 @@ Description: >-
 Conditions:
   Failover: !Equals
     - !Ref createFailoverIngress
-    - 'true'
+    - "true"
   externalLB: !Equals
-    - 'true'
+    - "true"
     - !Ref provisionExternalBigipLoadBalancer
   internalLB: !Equals
-    - 'true'
+    - "true"
     - !Ref provisionInternalBigipLoadBalancer
   createMgmtPublicIP01: !Or
     - !Equals
       - !Ref numberPublicMgmtIpAddresses
-      - '1'
+      - "1"
     - !Condition createMgmtPublicIP02
   createMgmtPublicIP02: !Or
     - !Equals
       - !Ref numberPublicMgmtIpAddresses
-      - '2'
+      - "2"
     - !Condition createMgmtPublicIP03
   createMgmtPublicIP03: !Or
     - !Equals
       - !Ref numberPublicMgmtIpAddresses
-      - '3'
+      - "3"
     - !Condition createMgmtPublicIP04
   createMgmtPublicIP04: !Equals
     - !Ref numberPublicMgmtIpAddresses
-    - '4'
+    - "4"
   createExternalPublicIP01: !Or
     - !Equals
-      - '1'
+      - "1"
       - !Ref numberPublicExternalIpAddresses
     - !Condition createExternalPublicIP02
   createExternalPublicIP02: !Or
     - !Equals
-      - '2'
+      - "2"
       - !Ref numberPublicExternalIpAddresses
     - !Condition createExternalPublicIP03
   createExternalPublicIP03: !Or
     - !Equals
-      - '3'
+      - "3"
       - !Ref numberPublicExternalIpAddresses
     - !Condition createExternalPublicIP04
   createExternalPublicIP04: !Equals
-    - '4'
+    - "4"
     - !Ref numberPublicExternalIpAddresses
   createAppSecurityGroup: !Equals
-    - 'true'
+    - "true"
     - !Ref createAppSecurityGroup
   createBastionSecurityGroup: !Equals
-    - 'true'
+    - "true"
     - !Ref createBastionSecurityGroup
   createExternalSecurityGroup: !Equals
-    - 'true'
+    - "true"
     - !Ref createExternalSecurityGroup
   createInternalSecurityGroup: !Equals
-    - 'true'
+    - "true"
     - !Ref createInternalSecurityGroup
   publicIp: !Equals
-    - 'false'
+    - "false"
     - !Ref createBastionSecurityGroup
   1nic: !And
     - !Equals
-      - 'false'
+      - "false"
       - !Ref createExternalSecurityGroup
     - !Equals
-      - 'false'
+      - "false"
       - !Ref createInternalSecurityGroup
 Metadata:
-  'AWS::CloudFormation::Interface':
+  "AWS::CloudFormation::Interface":
     ParameterGroups:
       - Label:
           default: Security Group
@@ -309,44 +309,44 @@ Parameters:
   cfeTag:
     Description: Cloud Failover deployment tag value.
     Type: String
-    Default: ''
+    Default: ""
   cfeVipTag:
     Description: Cloud Failover VIP tag value; provides private ip addresses to be assigned to VIP public ip.
     Type: String
-    Default: ''
+    Default: ""
   createAppSecurityGroup:
     AllowedValues:
-      - 'true'
-      - 'false'
-    Default: 'false'
+      - "true"
+      - "false"
+    Default: "false"
     Description: Select true if you would like to create a Security Group for your Application.
     Type: String
   createBastionSecurityGroup:
     AllowedValues:
-      - 'true'
-      - 'false'
-    Default: 'false'
+      - "true"
+      - "false"
+    Default: "false"
     Description: Select true if you would like to create a Security Group for your Bastion.
     Type: String
   createExternalSecurityGroup:
     AllowedValues:
-      - 'true'
-      - 'false'
-    Default: 'false'
+      - "true"
+      - "false"
+    Default: "false"
     Description: Select true if you would like to create a Security Group for the external BIG-IP interface.
     Type: String
   createInternalSecurityGroup:
     AllowedValues:
-      - 'true'
-      - 'false'
-    Default: 'false'
+      - "true"
+      - "false"
+    Default: "false"
     Description: Select true if you would like to create a Security Group for the internal BIG-IP interface.
     Type: String
   createFailoverIngress:
     AllowedValues:
-      - 'true'
-      - 'false'
-    Default: 'false'
+      - "true"
+      - "false"
+    Default: "false"
     Description: Selecting true will create additional Security Group rules to allow Config Sync and HA traffic between peer BIG-IP instances.
     Type: String
   environment:
@@ -354,11 +354,11 @@ Parameters:
     Description: Environment Tag.
     Type: String
   externalSubnetAz1:
-    Default: ''
+    Default: ""
     Description: Availability Zone 1 External Subnet ID.
     Type: String
   externalSubnetAz2:
-    Default: ''
+    Default: ""
     Description: Availability Zone 2 External Subnet ID.
     Type: String
   group:
@@ -366,11 +366,11 @@ Parameters:
     Description: Group Tag.
     Type: String
   internalSubnetAz1:
-    Default: ''
+    Default: ""
     Description: Availability Zone 1 Internal Subnet ID.
     Type: String
   internalSubnetAz2:
-    Default: ''
+    Default: ""
     Description: Availability Zone 2 Internal Subnet ID.
     Type: String
   numberPublicExternalIpAddresses:
@@ -391,31 +391,31 @@ Parameters:
     Type: String
   provisionExternalBigipLoadBalancer:
     AllowedValues:
-      - 'true'
-      - 'false'
-    Default: 'false'
+      - "true"
+      - "false"
+    Default: "false"
     Description: Select true if you would like to provision an external elastic load balancer.
     Type: String
   provisionInternalBigipLoadBalancer:
     AllowedValues:
-      - 'true'
-      - 'false'
-    Default: 'false'
+      - "true"
+      - "false"
+    Default: "false"
     Description: Select true if you would like to provision an internal elastic load balancer.
     Type: String
   restrictedSrcAddressApp:
     AllowedPattern: (\d{1,3})\.(\d{1,3})\.(\d{1,3})\.(\d{1,3})/(\d{1,2})
     ConstraintDescription: Must be a valid IP CIDR range of the form x.x.x.x/x.
     Description: REQUIRED - The IP address range that can be used to access web traffic (80/443) to the EC2 instances.
-    MaxLength: '18'
-    MinLength: '9'
+    MaxLength: "18"
+    MinLength: "9"
     Type: String
   restrictedSrcAddressMgmt:
     AllowedPattern: (\d{1,3})\.(\d{1,3})\.(\d{1,3})\.(\d{1,3})/(\d{1,2})
     ConstraintDescription: Must be a valid IP CIDR range of the form x.x.x.x/x.
     Description: REQUIRED - The IP address range used to SSH and access management GUI on the EC2 instances.
-    MaxLength: '18'
-    MinLength: '9'
+    MaxLength: "18"
+    MinLength: "9"
     Type: String
   restrictedSrcPort:
     ConstraintDescription: Must be a valid integer.
@@ -439,14 +439,14 @@ Parameters:
     Type: AWS::EC2::VPC::Id
 Resources:
   ExternalBigIpLoadBalancer:
-    Type: 'AWS::ElasticLoadBalancingV2::LoadBalancer'
+    Type: "AWS::ElasticLoadBalancingV2::LoadBalancer"
     Condition: externalLB
     Properties:
       Type: network
       Name: !Join
-        - ''
+        - ""
         - - !Ref uniqueString
-          - '-external-lb'
+          - "-external-lb"
       Scheme: internet-facing
       Subnets:
         - !Ref externalSubnetAz1
@@ -454,9 +454,9 @@ Resources:
       Tags:
         - Key: Name
           Value: !Join
-            - ''
+            - ""
             - - !Ref uniqueString
-              - '-external-lb'
+              - "-external-lb"
         - Key: costcenter
           Value: !Ref cost
         - Key: environment
@@ -466,7 +466,7 @@ Resources:
         - Key: owner
           Value: !Ref owner
   ExternalLBListenerHttps:
-    Type: 'AWS::ElasticLoadBalancingV2::Listener'
+    Type: "AWS::ElasticLoadBalancingV2::Listener"
     Condition: externalLB
     Properties:
       DefaultActions:
@@ -476,7 +476,7 @@ Resources:
       Port: 443
       Protocol: TCP
   ExternalLBListenerHttp:
-    Type: 'AWS::ElasticLoadBalancingV2::Listener'
+    Type: "AWS::ElasticLoadBalancingV2::Listener"
     Condition: externalLB
     Properties:
       DefaultActions:
@@ -486,13 +486,13 @@ Resources:
       Port: 80
       Protocol: TCP
   ExternalTargetGroupHttps:
-    Type: 'AWS::ElasticLoadBalancingV2::TargetGroup'
+    Type: "AWS::ElasticLoadBalancingV2::TargetGroup"
     Condition: externalLB
     Properties:
       Name: !Join
-        - ''
+        - ""
         - - !Ref uniqueString
-          - '-external-https-tg'
+          - "-external-https-tg"
       Port: 443
       Protocol: TCP
       HealthCheckIntervalSeconds: 10
@@ -502,20 +502,20 @@ Resources:
       UnhealthyThresholdCount: 2
       TargetGroupAttributes:
         - Key: deregistration_delay.timeout_seconds
-          Value: '20'
+          Value: "20"
         - Key: stickiness.enabled
-          Value: 'true'
+          Value: "true"
         - Key: stickiness.type
-          Value: 'source_ip'
+          Value: "source_ip"
       VpcId: !Ref vpc
   ExternalTargetGroupHttp:
-    Type: 'AWS::ElasticLoadBalancingV2::TargetGroup'
+    Type: "AWS::ElasticLoadBalancingV2::TargetGroup"
     Condition: externalLB
     Properties:
       Name: !Join
-        - ''
+        - ""
         - - !Ref uniqueString
-          - '-external-http-tg'
+          - "-external-http-tg"
       Port: 80
       Protocol: TCP
       HealthCheckIntervalSeconds: 10
@@ -525,31 +525,31 @@ Resources:
       UnhealthyThresholdCount: 2
       TargetGroupAttributes:
         - Key: deregistration_delay.timeout_seconds
-          Value: '20'
+          Value: "20"
       VpcId: !Ref vpc
       Tags:
-      - Key: Name
-        Value: !Join
-          - ''
-          - - !Ref uniqueString
-            - '-external-http-tg'
-      - Key: costcenter
-        Value: !Ref cost
-      - Key: environment
-        Value: !Ref environment
-      - Key: group
-        Value: !Ref group
-      - Key: owner
-        Value: !Ref owner
+        - Key: Name
+          Value: !Join
+            - ""
+            - - !Ref uniqueString
+              - "-external-http-tg"
+        - Key: costcenter
+          Value: !Ref cost
+        - Key: environment
+          Value: !Ref environment
+        - Key: group
+          Value: !Ref group
+        - Key: owner
+          Value: !Ref owner
   InternalBigIpLoadBalancer:
-    Type: 'AWS::ElasticLoadBalancingV2::LoadBalancer'
+    Type: "AWS::ElasticLoadBalancingV2::LoadBalancer"
     Condition: internalLB
     Properties:
       Type: network
       Name: !Join
-        - ''
+        - ""
         - - !Ref uniqueString
-          - '-internal-lb'
+          - "-internal-lb"
       Scheme: internal
       Subnets:
         - !Ref internalSubnetAz1
@@ -557,9 +557,9 @@ Resources:
       Tags:
         - Key: Name
           Value: !Join
-            - ''
+            - ""
             - - !Ref uniqueString
-              - '-internal-lb'
+              - "-internal-lb"
         - Key: costcenter
           Value: !Ref cost
         - Key: environment
@@ -569,7 +569,7 @@ Resources:
         - Key: owner
           Value: !Ref owner
   InternalLBListenerHttps:
-    Type: 'AWS::ElasticLoadBalancingV2::Listener'
+    Type: "AWS::ElasticLoadBalancingV2::Listener"
     Condition: internalLB
     Properties:
       DefaultActions:
@@ -579,7 +579,7 @@ Resources:
       Port: 443
       Protocol: TCP
   InternalLBListenerHttp:
-    Type: 'AWS::ElasticLoadBalancingV2::Listener'
+    Type: "AWS::ElasticLoadBalancingV2::Listener"
     Condition: internalLB
     Properties:
       DefaultActions:
@@ -589,13 +589,13 @@ Resources:
       Port: 80
       Protocol: TCP
   InternalTargetGroupHttps:
-    Type: 'AWS::ElasticLoadBalancingV2::TargetGroup'
+    Type: "AWS::ElasticLoadBalancingV2::TargetGroup"
     Condition: internalLB
     Properties:
       Name: !Join
-        - ''
+        - ""
         - - !Ref uniqueString
-          - '-internal-https'
+          - "-internal-https"
       Port: 443
       Protocol: TCP
       HealthCheckIntervalSeconds: 10
@@ -605,16 +605,16 @@ Resources:
       UnhealthyThresholdCount: 2
       TargetGroupAttributes:
         - Key: deregistration_delay.timeout_seconds
-          Value: '20'
+          Value: "20"
       VpcId: !Ref vpc
   InternalTargetGroupHttp:
-    Type: 'AWS::ElasticLoadBalancingV2::TargetGroup'
+    Type: "AWS::ElasticLoadBalancingV2::TargetGroup"
     Condition: internalLB
     Properties:
       Name: !Join
-        - ''
+        - ""
         - - !Ref uniqueString
-          - '-internal-http'
+          - "-internal-http"
       Port: 80
       Protocol: TCP
       HealthCheckIntervalSeconds: 10
@@ -624,7 +624,7 @@ Resources:
       UnhealthyThresholdCount: 2
       TargetGroupAttributes:
         - Key: deregistration_delay.timeout_seconds
-          Value: '20'
+          Value: "20"
       VpcId: !Ref vpc
   BigipManagementEipAddress01:
     Condition: createMgmtPublicIP01
@@ -639,12 +639,12 @@ Resources:
           Value: !Ref group
         - Key: Name
           Value: !Join
-            - ''
+            - ""
             - - !Ref uniqueString
-              - '-bigip-management-eip-01'
+              - "-bigip-management-eip-01"
         - Key: owner
           Value: !Ref owner
-    Type: 'AWS::EC2::EIP'
+    Type: "AWS::EC2::EIP"
   BigipManagementEipAddress02:
     Condition: createMgmtPublicIP02
     Properties:
@@ -658,12 +658,12 @@ Resources:
           Value: !Ref group
         - Key: Name
           Value: !Join
-            - ''
+            - ""
             - - !Ref uniqueString
-              - '-bigip-management-eip-02'
+              - "-bigip-management-eip-02"
         - Key: owner
           Value: !Ref owner
-    Type: 'AWS::EC2::EIP'
+    Type: "AWS::EC2::EIP"
   BigipManagementEipAddress03:
     Condition: createMgmtPublicIP03
     Properties:
@@ -677,12 +677,12 @@ Resources:
           Value: !Ref group
         - Key: Name
           Value: !Join
-            - ''
+            - ""
             - - !Ref uniqueString
-              - '-bigip-management-eip-03'
+              - "-bigip-management-eip-03"
         - Key: owner
           Value: !Ref owner
-    Type: 'AWS::EC2::EIP'
+    Type: "AWS::EC2::EIP"
   BigipManagementEipAddress04:
     Condition: createMgmtPublicIP04
     Properties:
@@ -696,12 +696,12 @@ Resources:
           Value: !Ref group
         - Key: Name
           Value: !Join
-            - ''
+            - ""
             - - !Ref uniqueString
-              - '-bigip-management-eip-04'
+              - "-bigip-management-eip-04"
         - Key: owner
           Value: !Ref owner
-    Type: 'AWS::EC2::EIP'
+    Type: "AWS::EC2::EIP"
   BigipExternalEipAddress01:
     Condition: createExternalPublicIP01
     Properties:
@@ -713,26 +713,14 @@ Resources:
           Value: !Ref environment
         - Key: group
           Value: !Ref group
-        - 'Fn::If':
-            - Failover
-            -
-              Key: f5_cloud_failover_label
-              Value: !Ref cfeTag
-            - !Ref 'AWS::NoValue'
-        - 'Fn::If':
-            - Failover
-            -
-              Key:  f5_cloud_failover_vips
-              Value: !Ref cfeVipTag
-            - !Ref 'AWS::NoValue'
         - Key: Name
           Value: !Join
-            - ''
+            - ""
             - - !Ref uniqueString
-              - '-bigip-external-eip-01'
+              - "-bigip-external-eip-01"
         - Key: owner
           Value: !Ref owner
-    Type: 'AWS::EC2::EIP'
+    Type: "AWS::EC2::EIP"
   BigipExternalEipAddress02:
     Condition: createExternalPublicIP02
     Properties:
@@ -746,12 +734,12 @@ Resources:
           Value: !Ref group
         - Key: Name
           Value: !Join
-            - ''
+            - ""
             - - !Ref uniqueString
-              - '-bigip-external-eip-02'
+              - "-bigip-external-eip-02"
         - Key: owner
           Value: !Ref owner
-    Type: 'AWS::EC2::EIP'
+    Type: "AWS::EC2::EIP"
   BigipExternalEipAddress03:
     Condition: createExternalPublicIP03
     Properties:
@@ -761,16 +749,26 @@ Resources:
           Value: !Ref cost
         - Key: environment
           Value: !Ref environment
+        - "Fn::If":
+            - Failover
+            - Key: f5_cloud_failover_label
+              Value: !Ref cfeTag
+            - !Ref "AWS::NoValue"
+        - "Fn::If":
+            - Failover
+            - Key: f5_cloud_failover_vips
+              Value: !Ref cfeVipTag
+            - !Ref "AWS::NoValue"
         - Key: group
           Value: !Ref group
         - Key: Name
           Value: !Join
-            - ''
+            - ""
             - - !Ref uniqueString
-              - '-bigip-external-eip-03'
+              - "-bigip-external-eip-03"
         - Key: owner
           Value: !Ref owner
-    Type: 'AWS::EC2::EIP'
+    Type: "AWS::EC2::EIP"
   BigipExternalEipAddress04:
     Condition: createExternalPublicIP04
     Properties:
@@ -784,16 +782,16 @@ Resources:
           Value: !Ref group
         - Key: Name
           Value: !Join
-            - ''
+            - ""
             - - !Ref uniqueString
-              - '-bigip-external-eip-04'
+              - "-bigip-external-eip-04"
         - Key: owner
           Value: !Ref owner
-    Type: 'AWS::EC2::EIP'
+    Type: "AWS::EC2::EIP"
   BigipExternalSecurityGroup:
     Condition: createExternalSecurityGroup
     Properties:
-      GroupDescription: 'Public or external interface rules'
+      GroupDescription: "Public or external interface rules"
       SecurityGroupIngress:
         - CidrIp: !Ref restrictedSrcAddressApp
           FromPort: 80
@@ -820,17 +818,17 @@ Resources:
           Value: !Ref group
         - Key: Name
           Value: !Join
-            - ''
+            - ""
             - - !Ref uniqueString
-              - '-bigip-external-sg'
+              - "-bigip-external-sg"
         - Key: owner
           Value: !Ref owner
       VpcId: !Ref vpc
-    Type: 'AWS::EC2::SecurityGroup'
+    Type: "AWS::EC2::SecurityGroup"
   BigipInternalSecurityGroup:
     Condition: createInternalSecurityGroup
     Properties:
-      GroupDescription: 'Internal interface rules'
+      GroupDescription: "Internal interface rules"
       SecurityGroupIngress:
         - IpProtocol: tcp
           FromPort: 80
@@ -849,16 +847,16 @@ Resources:
           Value: !Ref group
         - Key: Name
           Value: !Join
-            - ''
+            - ""
             - - !Ref uniqueString
-              - '-bigip-internal-sg'
+              - "-bigip-internal-sg"
         - Key: owner
           Value: !Ref owner
       VpcId: !Ref vpc
-    Type: 'AWS::EC2::SecurityGroup'
+    Type: "AWS::EC2::SecurityGroup"
   BigipMgmtSecurityGroup:
     Properties:
-      GroupDescription: 'Management interface rules'
+      GroupDescription: "Management interface rules"
       SecurityGroupIngress:
         - CidrIp: !If [publicIp, !Ref restrictedSrcAddressMgmt, !Ref vpcCidr]
           FromPort: 22
@@ -877,13 +875,13 @@ Resources:
           Value: !Ref group
         - Key: Name
           Value: !Join
-            - ''
+            - ""
             - - !Ref uniqueString
-              - '-bigip-mgmt-sg'
+              - "-bigip-mgmt-sg"
         - Key: owner
           Value: !Ref owner
       VpcId: !Ref vpc
-    Type: 'AWS::EC2::SecurityGroup'
+    Type: "AWS::EC2::SecurityGroup"
   BigipMgmtSecurityGroupIngressVip80:
     Condition: 1nic
     Properties:
@@ -892,7 +890,7 @@ Resources:
       GroupId: !Ref BigipMgmtSecurityGroup
       IpProtocol: tcp
       ToPort: 80
-    Type: 'AWS::EC2::SecurityGroupIngress'
+    Type: "AWS::EC2::SecurityGroupIngress"
   BigipMgmtSecurityGroupIngressVip443:
     Condition: 1nic
     Properties:
@@ -901,7 +899,7 @@ Resources:
       GroupId: !Ref BigipMgmtSecurityGroup
       IpProtocol: tcp
       ToPort: 443
-    Type: 'AWS::EC2::SecurityGroupIngress'
+    Type: "AWS::EC2::SecurityGroupIngress"
   BigipSecurityGroupIngressConfigSync:
     Condition: Failover
     Properties:
@@ -910,7 +908,7 @@ Resources:
       IpProtocol: tcp
       SourceSecurityGroupId: !Ref BigipExternalSecurityGroup
       ToPort: 4353
-    Type: 'AWS::EC2::SecurityGroupIngress'
+    Type: "AWS::EC2::SecurityGroupIngress"
   BigipSecurityGroupIngressHa:
     Condition: Failover
     Properties:
@@ -919,7 +917,7 @@ Resources:
       IpProtocol: udp
       SourceSecurityGroupId: !Ref BigipExternalSecurityGroup
       ToPort: 1026
-    Type: 'AWS::EC2::SecurityGroupIngress'
+    Type: "AWS::EC2::SecurityGroupIngress"
   BigipSecurityGroupIngressManagementGuiPort:
     Properties:
       FromPort: !Ref restrictedSrcPort
@@ -927,9 +925,9 @@ Resources:
       IpProtocol: tcp
       SourceSecurityGroupId: !Ref BigipMgmtSecurityGroup
       ToPort: !Ref restrictedSrcPort
-    Type: 'AWS::EC2::SecurityGroupIngress'
+    Type: "AWS::EC2::SecurityGroupIngress"
   appSecurityGroup:
-    Type: 'AWS::EC2::SecurityGroup'
+    Type: "AWS::EC2::SecurityGroup"
     Condition: createAppSecurityGroup
     Properties:
       VpcId: !Ref vpc
@@ -964,13 +962,13 @@ Resources:
           Value: !Ref group
         - Key: Name
           Value: !Join
-            - ''
+            - ""
             - - !Ref uniqueString
-              - '-application-sg'
+              - "-application-sg"
         - Key: owner
           Value: !Ref owner
   bastionSecurityGroup:
-    Type: 'AWS::EC2::SecurityGroup'
+    Type: "AWS::EC2::SecurityGroup"
     Condition: createBastionSecurityGroup
     Properties:
       VpcId: !Ref vpc
@@ -989,8 +987,8 @@ Resources:
           Value: !Ref group
         - Key: Name
           Value: !Join
-            - ''
+            - ""
             - - !Ref uniqueString
-              - '-bastion-sg'
+              - "-bastion-sg"
         - Key: owner
           Value: !Ref owner

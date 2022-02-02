@@ -544,11 +544,7 @@ Resources:
             - Id
           - !Ref "bigIpCustomImageId"
         externalPrimaryPublicId:
-          !If [
-            usePublicIpVip,
-            !GetAtt [Dag, Outputs.bigIpExternalEipAllocationId01],
-            "",
-          ]
+          !GetAtt [Dag, Outputs.bigIpExternalEipAllocationId01]
         externalPublicIpIds:
           !If [
             usePublicIpVip,
@@ -595,17 +591,8 @@ Resources:
             - Id
           - !Ref "bigIpCustomImageId"
         externalPrimaryPublicId:
-          !If [
-            usePublicIpVip,
-            !GetAtt [Dag, Outputs.bigIpExternalEipAllocationId03],
-            "",
-          ]
-        externalPublicIpIds:
-          !If [
-            usePublicIpVip,
-            !GetAtt [Dag, Outputs.bigIpExternalEipAllocationId04],
-            "",
-          ]
+          !GetAtt [Dag, Outputs.bigIpExternalEipAllocationId02]
+        externalPublicIpIds: ""
         externalSecurityGroupId:
           !GetAtt [Dag, Outputs.bigIpExternalSecurityGroup]
         externalSelfIp: !Ref "bigIpExternalSelfIp02"
@@ -651,7 +638,7 @@ Resources:
         group: !Ref "group"
         internalSubnetAz1: !Ref "bigIpInternalSubnetId01"
         internalSubnetAz2: !Ref "bigIpInternalSubnetId02"
-        numberPublicExternalIpAddresses: !If [usePublicIpVip, 4, 0]
+        numberPublicExternalIpAddresses: !If [usePublicIpVip, 3, 2]
         numberPublicMgmtIpAddresses: !If [usePublicIpMgmt, 2, 0]
         provisionExternalBigipLoadBalancer: false
         provisionInternalBigipLoadBalancer: false
