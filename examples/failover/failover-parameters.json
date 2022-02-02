@@ -64,11 +64,11 @@
     "ParameterValue": "10.0.3.11"
   },
   {
-    "ParameterKey": "bigIpExternalSecondarySelfIp01",
+    "ParameterKey": "bigIpExternalVipIp01",
     "ParameterValue": "10.0.0.101"
   },
   {
-    "ParameterKey": "bigIpExternalSecondarySelfIp02",
+    "ParameterKey": "bigIpExternalVipIp02",
     "ParameterValue": "10.0.3.101"
   },
   {
