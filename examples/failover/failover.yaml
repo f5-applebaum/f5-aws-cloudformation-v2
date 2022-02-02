@@ -701,7 +701,7 @@ Resources:
                 - !GetAtt
                   - Network
                   - Outputs.subnetsA
-        numSecondaryPrivateIpAddress: 1
+        numSecondaryPrivateIpAddress: !If [usePublicIpVip, 1, 0]
         sshKey: !Ref "sshKey"
         uniqueString: !Ref "uniqueString"
   BigIpInstance02:
