@@ -649,7 +649,7 @@ Resources:
         externalSecurityGroupId:
           !GetAtt [Dag, Outputs.bigIpExternalSecurityGroup]
         externalSelfIp: !Ref "bigIpExternalSelfIp01"
-        externalServiceIps: !Ref "bigIpExternalVip01"
+        externalServiceIps: !If [usePublicIpVip, !Ref "bigIpExternalVipIp01", ""]
         externalSubnetId: !If
           - usePublicIpVip
           - !Join
@@ -700,7 +700,7 @@ Resources:
                 - !GetAtt
                   - Network
                   - Outputs.subnetsA
-        numSecondaryPrivateIpAddress: !If [usePublicIpVip, 1, 0]
+        numSecondaryPrivateIpAddress: !If [usePublicIpVip, 1, 0 ]
         sshKey: !Ref "sshKey"
         uniqueString: !Ref "uniqueString"
   BigIpInstance02:
@@ -726,7 +726,7 @@ Resources:
         externalSecurityGroupId:
           !GetAtt [Dag, Outputs.bigIpExternalSecurityGroup]
         externalSelfIp: !Ref "bigIpExternalSelfIp02"
-        externalServiceIps: !Ref "bigIpExternalVip02"
+        externalServiceIps: !If [usePublicIpVip, !Ref "bigIpExternalVipIp02", ""]
         externalSubnetId: !If
           - usePublicIpVip
           - !Join
