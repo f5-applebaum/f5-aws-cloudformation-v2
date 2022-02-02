@@ -649,7 +649,7 @@ Resources:
         externalSecurityGroupId:
           !GetAtt [Dag, Outputs.bigIpExternalSecurityGroup]
         externalSelfIp: !Ref "bigIpExternalSelfIp01"
-        externalServiceIps: !If [usePublicIpVip, !Ref "bigIpExternalVipIp01", ""]
+        externalServiceIps: !If [usePublicIpVip, !Ref "bigIpExternalVip01", ""]
         externalSubnetId: !If
           - usePublicIpVip
           - !Join
@@ -726,7 +726,7 @@ Resources:
         externalSecurityGroupId:
           !GetAtt [Dag, Outputs.bigIpExternalSecurityGroup]
         externalSelfIp: !Ref "bigIpExternalSelfIp02"
-        externalServiceIps: !If [usePublicIpVip, !Ref "bigIpExternalVipIp02", ""]
+        externalServiceIps: !If [usePublicIpVip, !Ref "bigIpExternalVip02", ""]
         externalSubnetId: !If
           - usePublicIpVip
           - !Join
