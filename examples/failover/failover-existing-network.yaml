@@ -548,7 +548,7 @@ Resources:
         externalPublicIpIds:
           !If [
             usePublicIpVip,
-            !GetAtt [Dag, Outputs.bigIpExternalEipAllocationId02],
+            !GetAtt [Dag, Outputs.bigIpExternalEipAllocationId03],
             "",
           ]
         externalSecurityGroupId:
