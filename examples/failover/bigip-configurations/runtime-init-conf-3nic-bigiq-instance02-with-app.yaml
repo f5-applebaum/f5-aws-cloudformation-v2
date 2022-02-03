@@ -245,7 +245,14 @@ runtime_parameters:
     type: secret
     secretProvider:
       environment: aws
-      secretId: bigipPass
+      secretId: bigIpPass
+      type: SecretsManager
+      version: AWSCURRENT
+  - name: BIGIQ_PASSWORD
+    type: secret
+    secretProvider:
+      environment: aws
+      secretId: bigIqPass
       type: SecretsManager
       version: AWSCURRENT
   - name: BIGIQ_PASSWORD
