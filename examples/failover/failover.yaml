@@ -50,6 +50,7 @@ Metadata:
           - cfeVipTag
           - cfeTag
           - secretArn
+          - bigIqSecretArn
       - Label:
           default: Application Configuration
         Parameters:
@@ -83,6 +84,8 @@ Metadata:
         default: BIG-IP Runtime Init config used for BIGIP instance B
       bigIpRuntimeInitPackageUrl:
         default: Runtime Init Package
+      bigIqSecretArn:
+        default: The ARN of the BIG-IQ secret to use during BIG-IP licensing via BIG-IQ.
       cfeS3Bucket:
         default: CFE S3 bucket
       cfeTag:
@@ -377,6 +380,10 @@ Parameters:
     Description: Management Private IP Address for BIGIP instance B.
     Default: 10.0.4.11
     Type: String
+  bigIqSecretArn:
+    Description: The ARN of the AWS secret containing the password used during BIG-IP
+      licensing via BIG-IQ.
+    Type: String
   numAzs:
     Default: 2
     Description:
@@ -511,6 +518,7 @@ Resources:
           S3Bucket: !Ref "s3BucketName"
       Parameters:
         application: !Ref "application"
+        bigIqSecretArn: !Ref 'bigIqSecretArn'
         cost: !Ref "cost"
         environment: !Ref "environment"
         group: !Ref "group"

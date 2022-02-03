@@ -92,6 +92,10 @@
     "ParameterValue": "10.0.4.11"
   },
   {
+    "ParameterKey": "bigIqSecretArn",
+    "ParameterValue": ""
+  },
+  {
     "ParameterKey": "numAzs",
     "ParameterValue": "2"
   },

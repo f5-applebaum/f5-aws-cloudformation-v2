@@ -76,6 +76,10 @@
     "ParameterValue": ""
   },
   {
+    "ParameterKey": "bigIqSecretArn",
+    "ParameterValue": ""
+  },
+  {
     "ParameterKey": "group",
     "ParameterValue": "f5group"
   },

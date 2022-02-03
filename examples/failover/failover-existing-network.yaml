@@ -54,6 +54,7 @@ Metadata:
           - cfeVipTag
           - cfeTag
           - secretArn
+          - bigIqSecretArn
       - Label:
           default: Application Configuration
         Parameters:
@@ -84,6 +85,8 @@ Metadata:
         default: BIG-IP Runtime Init config used for BIGIP instance B
       bigIpRuntimeInitPackageUrl:
         default: Runtime Init Package
+      bigIqSecretArn:
+        default: The ARN of the BIG-IQ secret to use during BIG-IP licensing via BIG-IQ.
       cfeS3Bucket:
         default: CFE S3 bucket
       cfeTag:
@@ -295,6 +298,10 @@ Parameters:
   bigIpRuntimeInitPackageUrl:
     Default: "https://cdn.f5.com/product/cloudsolutions/f5-bigip-runtime-init/v1.4.0/dist/f5-bigip-runtime-init-1.4.0-1.gz.run"
     Description: URL for BIG-IP Runtime Init package.
+    Type: String
+  bigIqSecretArn:
+    Description: The ARN of the AWS secret containing the password used during BIG-IP
+      licensing via BIG-IQ.
     Type: String
   cfeS3Bucket:
     AllowedPattern: "^[0-9a-zA-Z]+([0-9a-zA-Z-]*[0-9a-zA-Z])*$"
@@ -509,6 +516,7 @@ Resources:
           S3Bucket: !Ref "s3BucketName"
       Parameters:
         application: !Ref "application"
+        bigIqSecretArn: !Ref 'bigIqSecretArn'
         cost: !Ref "cost"
         environment: !Ref "environment"
         group: !Ref "group"
