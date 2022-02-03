@@ -580,18 +580,21 @@ Resources:
         - is1Nic
         - !If
           - noExternalServiceIPs
-          - !Ref "mgmtSelfIp"
-          - !Ref "AWS::NoValue"
-        - !Ref "mgmtSelfIp"
+          - !Ref 'mgmtSelfIp'
+          - !Ref 'AWS::NoValue'
+        - !Ref 'mgmtSelfIp'
       PrivateIpAddresses: !If
-        - hasExternalServiceIPs
-        - - Primary: true
-            PrivateIpAddress: !Ref "mgmtSelfIp"
-          - Primary: false
-            PrivateIpAddress: !Select
-              - "0"
-              - !Ref "externalServiceIps"
-        - !Ref "AWS::NoValue"
+        - is1Nic
+        - !If    
+          - hasExternalServiceIPs
+          - - Primary: true
+              PrivateIpAddress: !Ref "mgmtSelfIp"
+            - Primary: false
+              PrivateIpAddress: !Select
+                - "0"
+                - !Ref "externalServiceIps"
+          - !Ref "AWS::NoValue"
+        - !Ref "AWS::NoValue"          
       SubnetId: !Ref "mgmtSubnetId"
     Type: "AWS::EC2::NetworkInterface"
   BigipStaticExternalInterface:

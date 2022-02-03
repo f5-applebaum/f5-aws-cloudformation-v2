@@ -743,7 +743,15 @@ Resources:
                   - "secretsmanager:GetSecretValue"
                   - "secretsmanager:ListSecretVersionIds"
                 Effect: Allow
-                Resource: !Ref secretArn
+                Resource:
+                  - !If
+                    - useSecretArn
+                    - !Ref secretArn
+                    - !Ref AWS::NoValue
+                  - !If
+                    - useBigIqSecretArn
+                    - !Ref bigIqSecretArn
+                    - !Ref AWS::NoValue
               - Action:
                   - s3:ListBucket
                   - s3:GetBucketLocation

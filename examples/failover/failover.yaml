@@ -224,7 +224,7 @@ Outputs:
     Value: !Join
       - ""
       - - "https://"
-        - !GetAtt [Dag, Outputs.bigIpExternalEipAddress02]
+        - !GetAtt [Dag, Outputs.bigIpExternalEipAddress03]
 Parameters:
   appDockerImageName:
     Default: "f5devcentral/f5-demo-app:latest"
