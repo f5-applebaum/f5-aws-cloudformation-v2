@@ -21,7 +21,7 @@ extension_services:
         class: Device
         async: true
         label: Standalone 3NIC BIG-IP declaration for Declarative Onboarding with
-          BYOL license
+          BIQ-IQ license
         Common:
           class: Tenant
           My_DBvariables:
