@@ -128,7 +128,7 @@ runtime_parameters:
     type: secret
     secretProvider:
       environment: aws
-      secretId: mySecretId
+      secretId: bigIpPass
       type: SecretsManager
       version: AWSCURRENT
   - name: HOST_NAME
