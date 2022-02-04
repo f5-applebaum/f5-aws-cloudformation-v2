@@ -858,11 +858,19 @@ Resources:
     Properties:
       GroupDescription: "Management interface rules"
       SecurityGroupIngress:
-        - CidrIp: !If [publicIp, !Ref restrictedSrcAddressMgmt, !Ref vpcCidr]
+        - CidrIp: !Ref restrictedSrcAddressMgmt
           FromPort: 22
           IpProtocol: tcp
           ToPort: 22
-        - CidrIp: !If [publicIp, !Ref restrictedSrcAddressMgmt, !Ref vpcCidr]
+        - CidrIp: !Ref restrictedSrcAddressMgmt
+          FromPort: !Ref restrictedSrcPort
+          IpProtocol: tcp
+          ToPort: !Ref restrictedSrcPort
+        - CidrIp: !Ref vpcCidr
+          FromPort: 22
+          IpProtocol: tcp
+          ToPort: 22
+        - CidrIp: !Ref vpcCidr
           FromPort: !Ref restrictedSrcPort
           IpProtocol: tcp
           ToPort: !Ref restrictedSrcPort
